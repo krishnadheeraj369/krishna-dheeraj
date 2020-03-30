@@ -1,0 +1,57 @@
+/*Write a C program using the fork() system call that generates this sequence in the child process. The starting number will be provided from the user. For example, if 8 is passed as a parameter on the command line, the child process will output 8, 4, 2, 1. Because the parent and child processes have their own copies of the data, it will be necessary for the child to output the sequence. Have the parent invoke the wait() call to wait for the child process to complete before exiting the program. Perform necessary error checking to ensure that a positive integer is passed on the command line.*/
+
+
+#include<stdio.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<unistd.h>
+
+int main()
+{
+
+  int n=0;
+  int k=0;	
+  pid_t pid;
+  
+     
+  x: printf("Enter a number greater than 0 \n"); 
+    scanf("%d", &k);	
+   if (k>0)
+     {
+   
+       while (k <= 0);
+       pid = fork();
+
+	if (pid == 0)
+	   {
+	      printf("Child is working...\n");
+	      printf("%d\n",k);
+		while (k!=1)
+		   {
+		     if (k%2 == 0)
+			 {
+			    k = k/2;
+			 }
+		     else if (k%2 == 1)
+			 {
+		            k = 3 * (k) + 1;
+			 }	
+		    printf("%d\n",k);
+		   }
+		
+	      printf("Child process is done.\n");
+	   }
+	else
+	  {
+	     printf("Parents is waiting on child process...\n");
+	     wait(0);
+	     printf("Parent process is done.\n");
+	  }
+      }
+
+  else
+  {
+   goto x;
+  }
+   return 0; 
+}
